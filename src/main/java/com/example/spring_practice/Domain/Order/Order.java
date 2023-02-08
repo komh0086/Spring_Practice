@@ -1,6 +1,7 @@
 package com.example.spring_practice.Domain.Order;
 
 import com.example.spring_practice.Domain.Taco.Taco;
+import com.example.spring_practice.Domain.User.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,9 @@ public class Order implements Serializable {
 
     @NotNull
     private Date placedAt;
+
+    @ManyToOne
+    private User user;//하나의 유저가 여러개의 주문을 가질수 있기에 @ManyToOne 어노테이션을 적어준다.
 
     @NotBlank(message="Name is required")
     private String deliveryName;

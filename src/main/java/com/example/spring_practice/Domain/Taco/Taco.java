@@ -17,7 +17,7 @@ public class Taco {
     @GeneratedValue(strategy = GenerationType.AUTO)//id를 자동으로 생성해주는 어노테이션
     private Long id;
 
-    @NotNull
+   //@NotNull
     private Date createdAt;
 
     @NotNull
@@ -28,8 +28,9 @@ public class Taco {
     @Size(min=1, message="You must choose at least 1 ingredient")
     private List<Ingredient> ingredients;
 
-    @PrePersist//메서드는 Taco 객체가 저장되기 전에 createdAt 속성을 초기화해주는데 사용
-    void createdAt(){
+    //@PrePersist//메서드는 Taco 객체가 저장되기 전에 createdAt 속성을 초기화해주는데 사용
+    @PreUpdate//@PrePersist가 작동하지않아서 @PreUpdate로 변경
+    void createdAt() {
         this.createdAt = new Date();
     }
 }

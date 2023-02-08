@@ -10,5 +10,6 @@ public class WebConfig implements WebMvcConfigurer {//뷰 컨트롤러의 역할
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");//"/" 경로로 GET 요청이 오면 home.html을 반환해 주는 ViewController를 추가해준다.
+        registry.addViewController("/login");//"/login" 경로로 들어오는 요청을 처리하는 컨트롤러 생성
     }
 }
