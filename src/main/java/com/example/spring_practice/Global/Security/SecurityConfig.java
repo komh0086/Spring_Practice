@@ -34,9 +34,6 @@ public class SecurityConfig {
 //                .passwordAttribute("userPasscode");
 //    }
 
-
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{//http 보안을 구성
         http
@@ -58,7 +55,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder encoder(){
-        return new BCryptPasswordEncoder();
+        return new NoEncodingPasswordEncoder();
     }
 
 

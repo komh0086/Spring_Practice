@@ -1,5 +1,6 @@
 package com.example.spring_practice.Controller;
 
+import com.example.spring_practice.Domain.Order.Component.OrderProps;
 import com.example.spring_practice.Domain.Order.Order;
 import com.example.spring_practice.Domain.Order.Repository.OrderRepository;
 import com.example.spring_practice.Domain.User.User;
@@ -18,25 +19,21 @@ import org.springframework.web.bind.support.SessionStatus;
 @Slf4j
 @Controller
 @SessionAttributes("order")
-@ConfigurationProperties(prefix = "taco.orders")//이 어노테이션을 통해 application.yml 파일을 통해 구성속정과 접두어를 지정할수 있다.
 @RequestMapping("/orders")
 public class OrderController {
 
-    private int pageSize = 20;
-
-    public void setPageSize(int pageSize){
-        this.pageSize = pageSize;
-    }
+    private OrderProps orderProps;
 
     private OrderRepository orderRepository;
 
-    public OrderController(OrderRepository orderRepository){
+    public OrderController(OrderRepository orderRepository, OrderProps orderProps){
         this.orderRepository = orderRepository;
+        this.orderProps = orderProps;
     }
 
     @GetMapping
     public String orderForUser(@AuthenticationPrincipal User user, Model model){
-        Pageable pageable = PageRequest.of(0, pageSize);//가장 최근 pageSize개의 주문을 받아오기위해 Pageable객체를 생성한다.
+        Pageable pageable = PageRequest.of(0, orderProps.getPageSize());//가장 최근 pageSize개의 주문을 받아오기위해 Pageable객체를 생성한다.
         model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
         return "orderList";
     }
