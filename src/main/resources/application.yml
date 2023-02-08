@@ -14,3 +14,8 @@ spring:
     password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
   thymeleaf:
     cache: false
+server:
+  port: 8080 # 서버 포트 지정
+taco:
+  order:
+    pageSize: 10 # OrderController객체의 속성을 변경할 수 있다.

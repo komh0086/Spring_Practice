@@ -5,8 +5,12 @@ import com.example.spring_practice.Domain.Order.Repository.OrderRepository;
 import com.example.spring_practice.Domain.User.User;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -14,8 +18,15 @@ import org.springframework.web.bind.support.SessionStatus;
 @Slf4j
 @Controller
 @SessionAttributes("order")
+@ConfigurationProperties(prefix = "taco.orders")//이 어노테이션을 통해 application.yml 파일을 통해 구성속정과 접두어를 지정할수 있다.
 @RequestMapping("/orders")
 public class OrderController {
+
+    private int pageSize = 20;
+
+    public void setPageSize(int pageSize){
+        this.pageSize = pageSize;
+    }
 
     private OrderRepository orderRepository;
 
@@ -23,6 +34,12 @@ public class OrderController {
         this.orderRepository = orderRepository;
     }
 
+    @GetMapping
+    public String orderForUser(@AuthenticationPrincipal User user, Model model){
+        Pageable pageable = PageRequest.of(0, pageSize);//가장 최근 pageSize개의 주문을 받아오기위해 Pageable객체를 생성한다.
+        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
+        return "orderList";
+    }
     @GetMapping("/current")
     public String orderForm(@AuthenticationPrincipal User user, @ModelAttribute Order order){
         if(order.getDeliveryName() == null){
