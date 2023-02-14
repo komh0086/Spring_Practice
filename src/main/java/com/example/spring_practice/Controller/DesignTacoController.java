@@ -1,8 +1,8 @@
 package com.example.spring_practice.Controller;
 
 import com.example.spring_practice.Domain.Ingredient.Ingredient;
-import com.example.spring_practice.Domain.Order.Order;
 import com.example.spring_practice.Domain.Ingredient.Repository.IngredientRepository;
+import com.example.spring_practice.Domain.Order.Order;
 import com.example.spring_practice.Domain.Taco.Repository.TacoRepository;
 import com.example.spring_practice.Domain.Taco.Taco;
 import com.example.spring_practice.Domain.User.Repository.UserRepository;
@@ -10,6 +10,10 @@ import com.example.spring_practice.Domain.User.User;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,12 +22,13 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j//자바에 사용하는 Simple Logging Facade라는 Logger를 사용하기 위한 어노테이션
 @Controller
 @SessionAttributes("order")//하나의 세션에서 동작하는 Taco와는 다르게 여러 요청을 통해 만들어지는 객체이므로 Session Scope에 저장하는 것이 좋다.
-@RequestMapping("/design")
+@RequestMapping(path = "/design")
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
@@ -38,6 +43,8 @@ public class DesignTacoController {
         this.tacoRepository = tacoRepository;
         this.userRepository = userRepository;
     }
+
+
 
     @GetMapping//"/design"경로로 Get요청이 들어오면 받는 컨트롤러
     public String showDesignForm(Model model, Principal principal) {//Principal은 우리가 인증을 마치고 Spring security로 보내는 객체의 최상위 인터페이스
