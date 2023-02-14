@@ -1,4 +1,4 @@
-package com.example.spring_practice.Controller;
+package com.example.spring_practice.Domain.Order.Controller;
 
 import com.example.spring_practice.Domain.Order.Component.OrderProps;
 import com.example.spring_practice.Domain.Order.Order;

@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-public class Taco {
+public class Taco extends RepresentationModel<Taco> {//하이퍼링크를 추가해주기위해 RepresentationModel을 상속받음
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)//id를 자동으로 생성해주는 어노테이션
@@ -28,8 +29,7 @@ public class Taco {
     @Size(min=1, message="You must choose at least 1 ingredient")
     private List<Ingredient> ingredients;
 
-    //@PrePersist//메서드는 Taco 객체가 저장되기 전에 createdAt 속성을 초기화해주는데 사용
-    @PreUpdate//@PrePersist가 작동하지않아서 @PreUpdate로 변경
+    @PrePersist//메서드는 Taco 객체가 저장되기 전에 createdAt 속성을 초기화해주는데 사용
     void createdAt() {
         this.createdAt = new Date();
     }

@@ -1,4 +1,4 @@
-package com.example.spring_practice.Controller;
+package com.example.spring_practice.Domain.Taco.Controller;
 
 import com.example.spring_practice.Domain.Ingredient.Ingredient;
 import com.example.spring_practice.Domain.Ingredient.Repository.IngredientRepository;
@@ -82,9 +82,9 @@ public class DesignTacoController {
             return "design";//에러가 있을경우 다시 design.html을 반환해 준다.
         }
         //이 부분에 POST요청을 처리한다.
-        log.info("Processing design: " + design);
-
         Taco saved = tacoRepository.save(design);
+
+        log.info("Processing design: " + saved);
         order.addDesign(saved);
         return "redirect:/orders/current";
     }
