@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf().disable()//csrf 토큰을 사용하지 않음
                 .authorizeHttpRequests()
                 .requestMatchers("/design", "/orders").hasRole("USER")//design, orders 경로의 요청은 USER권한을 가진 사용자만 허용된다.
-                .requestMatchers("/", "/**").permitAll()//모든 요청이 허용 된다.
+                .requestMatchers("/", "/**", "/**/**").permitAll()//모든 요청이 허용 된다.
                 .and().headers().frameOptions().disable()//h2 console접근을 위해 사용했지만 원리는 잘 모르겠다.
                 .and().formLogin().loginPage("/login")//로그인페이지 경로지정 인증이 필요할때 자동으로 이 경로로 보내준다.
                 .and().logout().logoutSuccessUrl("/")

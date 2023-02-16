@@ -1,4 +1,7 @@
 spring:
+  data:
+    rest:
+      base-path: /api # REST API에 대한 base-path 지정
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
